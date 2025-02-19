@@ -45,5 +45,6 @@
 - src/r/format_featurecounts.r
 - src/r/plot_heatmap.r
 - src/r/plot_pca.r
+- Src/r/plot_volcano.r   # update 2025-02-19
 - src/r/simulate_counts.r
 - src/r/simulate_null.r
