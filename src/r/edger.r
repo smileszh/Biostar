@@ -293,8 +293,8 @@ new_cols = c( other_cols,
 total = total[, new_cols]
 
 # Reformat these columns as string.
-total$PAdj = formatC(total$PAdj, format = "e", digits = 1)
-total$PValue = formatC(total$PValue, format = "e", digits = 1)
+total$PAdj = formatC(total$PAdj, format = "e", digits = 2)
+total$PValue = formatC(total$PValue, format = "e", digits = 2)
 
 # Write the results to the standard output.
 write.csv(total, file=output_file, row.names = F, quote = F)
