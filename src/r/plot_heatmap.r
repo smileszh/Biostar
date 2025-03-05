@@ -160,12 +160,12 @@ count_matrix = jitter(count_matrix, factor = 1, amount = 0.00001)
 count_zscores = t(scale(t(count_matrix)))
 
 # Normalize each row to a z-score
-count_zscores = NULL
-for (i in 1 : nrow(count_matrix)) {
-  row = count_matrix[i,]
-  zrow = (row - mean(row)) / sd(row)
-  count_zscores = rbind(count_zscores, zrow)
-}
+# count_zscores = NULL
+# for (i in 1 : nrow(count_matrix)) {
+#   row = count_matrix[i,]
+#   zrow = (row - mean(row)) / sd(row)
+#   count_zscores = rbind(count_zscores, zrow)
+# }
 
 # Set the row names on the zscores.
 row.names(count_zscores) = row_names

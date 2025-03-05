@@ -23,10 +23,10 @@ p_t = 0.05
 min_log2FoldChange = 1
 
 # Plot width
-WIDTH = 8
+WIDTH = 9
 
 # Plot height.
-HEIGHT = 8
+HEIGHT = 9
 
 # Set the margins
 MARGINS = c(9, 12)
@@ -173,13 +173,20 @@ cat("# There are", stable, "unchanged genes.\n")
 # Plot volcano
 
 ggplot(data = deg, aes(x = log2FoldChange, y = -log10(.data[[p]]))) +
-  geom_point(alpha=0.4, size=3.5, aes(color=change)) +
-  scale_color_manual(values=c("blue", "grey","red"))+
+  geom_point(alpha=0.5, size=1, aes(color=change)) +
+  scale_color_manual(values=c("dodgerblue", "lightgrey", "firebrick"))+
   geom_vline(xintercept=c(-min_log2FoldChange,min_log2FoldChange),lty=4,col="black",linewidth=0.8) +
   geom_hline(yintercept = -log10(p_t),lty=4,col="black",linewidth=0.8) +
-  theme_bw()
+  theme_bw() +
+  theme(axis.title = element_text(size=10), 
+        plot.title = element_text(size = 10, hjust = 0.5),
+        plot.title.position = "plot",
+        legend.position = "top",
+        legend.text = element_text(size= 8),
+        legend.title = element_text(size= 8),
+  )
 
-ggsave(output_file, width = WIDTH, height = HEIGHT)
+ggsave(output_file, width = WIDTH, height = HEIGHT, units = "cm")
 
 # Inform the user.
 cat("# Output:", output_file, "\n")
