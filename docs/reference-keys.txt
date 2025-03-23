@@ -1,0 +1,10 @@
+aria2
+curl
+sra
+fastp
+bwa
+构建索引
+比对
+hisat2
+构建索引-1
+比对-1
