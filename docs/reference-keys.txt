@@ -8,3 +8,17 @@ bwa
 hisat2
 构建索引-1
 比对-1
+makefile
+简介
+makefile-的小技巧
+默认设置
+试运行模式
+变量命名
+文本替换
+生信流程模块化
+step1-默认设置
+step2-打印帮助
+step3-定义变量
+step4-添加代码
+step5-运行命令
+拓展

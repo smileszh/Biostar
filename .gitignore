@@ -21,6 +21,9 @@ _book/
 
 # data
 data/
+GDCdata/
+*RData
+*Rdata
 
 # raw Rmd
 # *.Rmd

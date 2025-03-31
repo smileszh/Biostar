@@ -195,7 +195,7 @@
 
 \title{Biostar}
 \author{小苏}
-\date{2025-03-24}
+\date{2025-03-31}
 
 \begin{document}
 \maketitle
@@ -555,6 +555,347 @@ SRA（Sequence Read Archive） 是一个由美国国家生物技术信息中心�
 \end{Shaded}
 
 \href{src/run/hisat2.mk}{sra.mk}
+
+\part{模块化脚本}\label{part-ux6a21ux5757ux5316ux811aux672c}
+
+\chapter{makefile}\label{makefile}
+
+\section{简介}\label{ux7b80ux4ecb}
+
+官方教程：
+
+\url{https://www.gnu.org/software/make/manual/make.html}
+
+在生信上游分析中，我们不可能每次都手动输入我们的命令，通常我们会将我们的命令写入到一个脚本文件中，然后通过运行脚本文件来执行我们的命令。但是，当我们工作有些变化时，我们就需要做出一些改变，包括增加或删除，这样就会增加我们的工作量和代码复用性。因此，我们可以使用 makefile 来模块化我们的分析流程。
+
+Makefile 是一种用于自动化构建过程的文件，通常用于 Unix 和类 Unix 系统上。它由一个名为 \texttt{make} 的工具读取和执行。Makefile 定义了一系列的规则和依赖关系，用于指导如何编译和链接程序。
+
+在生信分析中使用 makefile 可以帮助我们自动化分析流程，我们不需要特别高级的学习。
+下面是一个简单的 makefile 示例：
+
+首先我们创建一个文件，命名为\texttt{Makefile}，然后在文件中写入一些内容。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+
+\CommentTok{\# 命令 1 }
+\DecValTok{foo:}
+\NormalTok{\textgreater{} echo Hello world!}
+
+\CommentTok{\# 命令 2}
+\DecValTok{bar:}
+\NormalTok{\textgreater{} echo Hello world!}
+\NormalTok{\textgreater{} echo Hello Everyone!}
+\end{Highlighting}
+\end{Shaded}
+
+在这个 makefile 中，我们定义了两个目标 \texttt{foo} 和 \texttt{bar}，分别对应两个命令。我们可以通过 \texttt{make\ foo} 和 \texttt{make\ bar} 来执行这两个命令。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{$}\NormalTok{ make }\AttributeTok{{-}f}\NormalTok{ Makefile foo}
+\BuiltInTok{echo}\NormalTok{ Hello world!}
+\ExtensionTok{Hello}\NormalTok{ world!}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{$}\NormalTok{ make }\AttributeTok{{-}f}\NormalTok{ Makefile bar}
+\BuiltInTok{echo}\NormalTok{ Hello world!}
+\ExtensionTok{Hello}\NormalTok{ world!}
+\BuiltInTok{echo}\NormalTok{ Hello Everyone!}
+\ExtensionTok{Hello}\NormalTok{ Everyone!}
+\end{Highlighting}
+\end{Shaded}
+
+当你的文件名是 \texttt{Makefile} 时，你可以直接使用 \texttt{make} 命令，而不需要 \texttt{-f} 参数。
+
+通常 makefile 会将命令和结果同时输出到终端，如果我们只想输出结果，\href{mailto:可以将命令前加一个@符号}{\nolinkurl{可以将命令前加一个@符号}}。比如这样：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+
+\CommentTok{\# 命令 1 }
+\DecValTok{foo:}
+\NormalTok{\textgreater{} @echo Hello world!}
+\end{Highlighting}
+\end{Shaded}
+
+和 bash 脚本一样，makefile 也可以使用变量，比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+
+\DataTypeTok{NAME} \CharTok{=}\StringTok{ xiaoming}
+
+\DecValTok{hello:}
+\NormalTok{\textgreater{} @echo Hello }\CharTok{$\{}\DataTypeTok{NAME}\CharTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+输出结果为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{$}\NormalTok{ make }\AttributeTok{{-}f}\NormalTok{ anyfile hello}
+\ExtensionTok{Hello}\NormalTok{ xiaoming}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{make} 的开发目的是跟踪目标之间的相互依赖关系，并在任何文件发生更改时，仅执行必要的步骤。例如，如果你已经有一个基因组索引，\texttt{make} 命令将跳过索引步骤。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set the prefix from tabs to \textgreater{}}
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+
+\DecValTok{counts.txt:}
+\NormalTok{\textgreater{} echo 100 \textgreater{} counts.txt}
+
+\DecValTok{names.txt:}
+\NormalTok{\textgreater{} echo Joe \textgreater{} names.txt}
+
+\DecValTok{results.txt:}\DataTypeTok{ counts.txt names.txt}
+\NormalTok{\textgreater{} cat counts.txt names.txt \textgreater{} results.txt}
+\end{Highlighting}
+\end{Shaded}
+
+在上面的 Makefile 中，输入 \texttt{make\ results.txt} 将首先生成 \texttt{counts.txt} 和 \texttt{names.txt}，如果它们不存在的话。然后，它将从这两个文件生成 \texttt{results.txt}。如果你再次运行 \texttt{make}，它将不会执行任何操作，因为所有文件已经存在。
+
+\section{makefile 的小技巧}\label{makefile-ux7684ux5c0fux6280ux5de7}
+
+\subsection{默认设置}\label{ux9ed8ux8ba4ux8bbeux7f6e}
+
+在 Makefile 中添加上这些设置后可以让 makefile 更加强大：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+\OtherTok{.DELETE\_ON\_ERROR:}
+\DataTypeTok{SHELL} \CharTok{:=}\StringTok{ bash}
+\OtherTok{.ONESHELL:}
+\DataTypeTok{.SHELLFLAGS} \CharTok{:=}\StringTok{ {-}eu {-}o pipefail {-}c}
+\DataTypeTok{MAKEFLAGS} \CharTok{+=}\StringTok{ {-}{-}warn{-}undefined{-}variables {-}{-}no{-}print{-}directory}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{.DELETE\_ON\_ERROR:}
+
+这个特殊目标告诉 \texttt{make} 在命令执行失败时删除生成的目标文件，以防止生成不完整或损坏的文件。
+\texttt{SHELL\ :=\ bash}
+
+这行代码指定 \texttt{make} 使用 \texttt{bash} 作为默认的 shell 来执行命令。默认情况下，\texttt{make} 使用 \texttt{/bin/sh}，但可以通过这种方式指定使用其他 shell。
+\texttt{.ONESHELL:}
+
+这个特殊目标指示 \texttt{make} 将单个目标的所有命令在同一个 shell 会话中执行，而不是为每个命令启动一个新的 shell。这对于需要在多个命令之间共享环境或状态的情况很有用。
+\texttt{.SHELLFLAGS\ :=\ -eu\ -o\ pipefail\ -c}
+
+这些标志用于配置 \texttt{bash} 的行为：
+\texttt{-e}：如果任何命令失败（返回非零状态），则 \texttt{bash} 退出。
+\texttt{-u}：使用未定义的变量时，\texttt{bash} 会报错并退出。
+\texttt{-o\ pipefail}：如果管道中的任何命令失败，整个管道返回失败状态。
+\texttt{-c}：从字符串中读取命令并执行。
+\texttt{MAKEFLAGS\ +=\ -\/-warn-undefined-variables\ -\/-no-print-directory}
+
+\texttt{-\/-warn-undefined-variables}：警告使用未定义的变量，以帮助捕获拼写错误或遗漏的变量定义。
+\texttt{-\/-no-print-directory}：禁用 \texttt{make} 在递归调用时打印目录信息，这可以使输出更简洁。
+
+\subsection{``试运行''模式}\label{ux8bd5ux8fd0ux884cux6a21ux5f0f}
+
+在 bash 命令中，命令对不对，我们可以运行一下看看，如果不对，我们可以再次运行。但是在 makefile 中，我们不希望这样，我们希望一次就对，所以我们可以使用 \texttt{-n} 参数来进行``试运行''模式。这样 makefile 会输出将要执行的命令，但是不会真正执行。这样可以帮助我们检查命令是否正确。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{$}\NormalTok{ make hello}
+\ExtensionTok{Hello}\NormalTok{ xiaoming}
+
+\ExtensionTok{$}\NormalTok{ make hello }\AttributeTok{{-}n}
+\BuiltInTok{echo}\NormalTok{ Hello xiaoming}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{变量命名}\label{ux53d8ux91cfux547dux540d}
+
+在 Makefile 中可以通过 \texttt{?=} 这样的方式预设变量：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+
+\DataTypeTok{NAME} \CharTok{?=}\StringTok{ xiaoming}
+
+\DecValTok{hello:}
+\NormalTok{\textgreater{} @echo Hello }\CharTok{$\{}\DataTypeTok{NAME}\CharTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+这样，如果我们在命令行中没有定义 \texttt{NAME} 变量，那么 \texttt{NAME} 就会被设置为 \texttt{xiaoming}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{$}\NormalTok{ make hello}
+\ExtensionTok{Hello}\NormalTok{ xiaoming}
+
+\ExtensionTok{$}\NormalTok{ make hello NAME=lihua}
+\ExtensionTok{Hello}\NormalTok{ lihua}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{文本替换}\label{ux6587ux672cux66ffux6362}
+
+在某些情况下，您想从现有字符串创建一个新字符串。
+
+例如，你想从路径中提取目录名或文件名，如
+
+PATH = data/reads/abc.txt
+make 语法提供了函数来执行此操作，例如：
+
+DIR = \$(dir \$\{PATH\}) 将包含 data/reads/
+FNAME = \$(notdir \$\{PATH\}) 将包含 abc.txt
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Sets the prefix for commands.}
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+
+\CommentTok{\# Set a filename}
+\DataTypeTok{FILE} \CharTok{=}\StringTok{ data/refs/ebola.fa.gz}
+
+\DecValTok{demo:}
+
+\CommentTok{\# Prints: data/refs/ebola.fa.gz}
+\NormalTok{\textgreater{} @echo }\CharTok{$\{}\DataTypeTok{FILE}\CharTok{\}}
+
+\CommentTok{\# Prints: data/refs}
+\NormalTok{\textgreater{} @ echo }\CharTok{$(}\KeywordTok{dir}\StringTok{ }\CharTok{$\{}\DataTypeTok{FILE}\CharTok{\})}
+
+\CommentTok{\# Prints: ebola.fa.gz}
+\NormalTok{\textgreater{} @ echo }\CharTok{$(}\KeywordTok{notdir}\StringTok{ }\CharTok{$\{}\DataTypeTok{FILE}\CharTok{\})}
+
+\CommentTok{\# Prints: data/refs/human.fa.gz}
+\NormalTok{\textgreater{} @ echo }\CharTok{$(}\KeywordTok{subst}\StringTok{ ebola}\KeywordTok{,}\StringTok{human}\KeywordTok{,}\CharTok{$\{}\DataTypeTok{FILE}\CharTok{\})}
+
+\CommentTok{\# Prints: data/refs/ebola.fa}
+\NormalTok{\textgreater{} @echo }\CharTok{$(}\KeywordTok{patsubst}\StringTok{ \%.gz}\KeywordTok{,}\StringTok{\%}\KeywordTok{,}\CharTok{$\{}\DataTypeTok{FILE}\CharTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{$}\NormalTok{ make demo}
+\ExtensionTok{data/refs/ebola.fa.gz}
+\ExtensionTok{data/refs/}
+\ExtensionTok{ebola.fa.gz}
+\ExtensionTok{data/refs/human.fa.gz}
+\ExtensionTok{data/refs/ebola.fa}
+\end{Highlighting}
+\end{Shaded}
+
+\section{生信流程模块化}\label{ux751fux4fe1ux6d41ux7a0bux6a21ux5757ux5316}
+
+虽然我们都希望一个脚本能够完成所有的工作，这样是可实现的，但可能会遇到各种各样的问题，比如脚本过长，不易维护，不易复用等。因此，我们可以将脚本分解为多个模块，每个模块负责一个特定的任务。这样可以提高代码的可读性，可维护性和可复用性。
+
+明白了需求后，按照一个良好的编写习惯，可以很好的将脚本模块化。这样可以提高代码的可读性，可维护性和可复用性。我们接下来编写一个从 SRA 数据库下载 metadata 数据的 make 脚本吧。
+
+\subsection{step1: 默认设置}\label{step1-ux9ed8ux8ba4ux8bbeux7f6e}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Makefile customizations.}
+\DataTypeTok{.RECIPEPREFIX} \CharTok{=}\StringTok{ \textgreater{}}
+\OtherTok{.DELETE\_ON\_ERROR:}
+\DataTypeTok{SHELL} \CharTok{:=}\StringTok{ bash}
+\OtherTok{.ONESHELL:}
+\DataTypeTok{.SHELLFLAGS} \CharTok{:=}\StringTok{ {-}eu {-}o pipefail {-}c}
+\DataTypeTok{MAKEFLAGS} \CharTok{+=}\StringTok{ {-}{-}warn{-}undefined{-}variables {-}{-}no{-}print{-}directory}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{step2: 打印帮助}\label{step2-ux6253ux5370ux5e2eux52a9}
+
+我们总是会忘记自己的脚本是干什么的。因此，最好第一个命令是打印帮助。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print usage information.}
+\DecValTok{usage:}
+\NormalTok{\textgreater{} @echo }\StringTok{"\#"}
+\DecValTok{\textgreater{} @echo "\# metadata.mk:}\DataTypeTok{ downloads metadata from SRA"}
+\NormalTok{\textgreater{} @echo }\StringTok{"\#"}
+\NormalTok{\textgreater{} @echo }\StringTok{"\# SRA=}\CharTok{$\{}\DataTypeTok{SRA}\CharTok{\}}\StringTok{"}
+\NormalTok{\textgreater{} @echo }\StringTok{"\#"}
+\NormalTok{\textgreater{} @echo }\StringTok{"\# make run|keys|clean"}
+\NormalTok{\textgreater{} @echo }\StringTok{"\#"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{step3: 定义变量}\label{step3-ux5b9aux4e49ux53d8ux91cf}
+
+刚开始可以不需要这一步，等到足够熟练使用后，可以将一些常用的变量定义在这里。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Sets the default target.}
+\DataTypeTok{SRA} \CharTok{?=}\StringTok{ PRJEB31790}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{step4: 添加代码}\label{step4-ux6dfbux52a0ux4ee3ux7801}
+
+这里添加一下下载，提取信息，清理的代码。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{run:}
+\NormalTok{\textgreater{} @bio search }\CharTok{$\{}\DataTypeTok{SRA}\CharTok{\}}\NormalTok{ {-}H {-}{-}csv {-}{-}all \textgreater{} }\CharTok{$\{}\DataTypeTok{SRA}\CharTok{\}}\NormalTok{.csv}
+
+\DecValTok{keys:}\DataTypeTok{ }\CharTok{$\{}\DataTypeTok{SRA}\CharTok{\}}\DataTypeTok{.csv}
+\NormalTok{\textgreater{} @cat }\CharTok{$\{}\DataTypeTok{SRA}\CharTok{\}}\NormalTok{.csv | csvcut {-}c run\_accession,sample\_title}
+
+\DecValTok{clean:}
+\NormalTok{\textgreater{} @rm {-}f }\CharTok{$\{}\DataTypeTok{SRA}\CharTok{\}}\NormalTok{.csv}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{step5: 运行命令}\label{step5-ux8fd0ux884cux547dux4ee4}
+
+把上述所有代码放到一个文件中，然后运行 make 命令。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 使用默认变量}
+\FunctionTok{make} \AttributeTok{{-}f}\NormalTok{ metadata.mk run}
+
+\CommentTok{\# 使用自定义变量}
+\FunctionTok{make} \AttributeTok{{-}f}\NormalTok{ metadata.mk run SRA=PRJNA932187}
+
+\CommentTok{\# 提取关键信息}
+\FunctionTok{make} \AttributeTok{{-}f}\NormalTok{ metadata.mk keys}
+\CommentTok{\# 也可以直接运行，因为定义了依赖，会默认先运行 run，然后运行 keys}
+
+\CommentTok{\# 清理}
+\FunctionTok{make} \AttributeTok{{-}f}\NormalTok{ metadata.mk clean}
+\end{Highlighting}
+\end{Shaded}
+
+\section{拓展}\label{ux62d3ux5c55}
+
+我经常使用的软件 \texttt{bio} :
+\url{https://www.bioinfo.help/index.html}
+这个软件有很多我们常用的生信工具。我建议你使用它！
+
+下载软件后，运行下面这个代码会下载很多的 makefile 脚本，熟悉使用它们，你会发现生信分析变得更加简单。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{bio}\NormalTok{ code}
+\end{Highlighting}
+\end{Shaded}
+
 
 \bibliography{book.bib,packages.bib}
 

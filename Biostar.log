@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.24)  24 MAR 2025 05:03
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.24)  31 MAR 2025 21:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -921,9 +921,11 @@ Overfull \hbox (3.28825pt too wide) detected at line 13
  []\TU/lmr/m/n/10.53937 xxix
  []
 
-)
-\tf@toc=\write6
-\openout6 = `Biostar.toc'.
+
+Package xcolor Warning: Incompatible color definition on input line 14.
+
+
+Package xcolor Warning: Incompatible color definition on input line 15.
 
 
 
@@ -931,17 +933,49 @@ Overfull \hbox (3.28825pt too wide) detected at line 13
 
 ]
 
+Package xcolor Warning: Incompatible color definition on input line 16.
+
+
+Overfull \hbox (5.9231pt too wide) detected at line 16
+ []\TU/lmr/m/n/10.53937 xxxv
+ []
+
+
+Package xcolor Warning: Incompatible color definition on input line 17.
+
+
+Overfull \hbox (14.71294pt too wide) detected at line 17
+ []\TU/lmr/m/n/10.53937 xxxviii
+ []
+
+
+Package xcolor Warning: Incompatible color definition on input line 22.
+
+
+Package xcolor Warning: Incompatible color definition on input line 28.
+
+
+Overfull \hbox (0.94852pt too wide) detected at line 28
+ []\TU/lmr/m/n/10.53937 xliii
+ []
+
+)
+\tf@toc=\write6
+\openout6 = `Biostar.toc'.
+
+
+
 LaTeX Font Info:    Font shape `TU/STSong(0)/m/sl' in size <10.53937> not available
 (Font)              Font shape `TU/STSong(0)/m/it' tried instead on input line 216.
-[4
-
-] (./Biostar.lot)
+[4] (./Biostar.lot)
 \tf@lot=\write7
 \openout7 = `Biostar.lot'.
 
 
 
-[5]
+[5
+
+]
 
 [6
 
@@ -1332,28 +1366,286 @@ Package xcolor Warning: Incompatible color definition on input line 557.
 
 Package xcolor Warning: Incompatible color definition on input line 557.
 
-No file Biostar.bbl.
 
 
 [31]
 
 [32
 
+]
+
+[33]
+
+[34]
+
+Package xcolor Warning: Incompatible color definition on input line 567.
+
+
+Package xcolor Warning: Incompatible color definition on input line 578.
+
+
+LaTeX Font Warning: Font shape `TU/STFangsong(0)/m/it' undefined
+(Font)              using `TU/STFangsong(0)/m/n' instead on input line 582.
+
+
+Package xcolor Warning: Incompatible color definition on input line 591.
+
+
+Package xcolor Warning: Incompatible color definition on input line 591.
+
+
+Package xcolor Warning: Incompatible color definition on input line 591.
+
+
+
+[35
+
+]
+
+Package xcolor Warning: Incompatible color definition on input line 591.
+
+
+Package xcolor Warning: Incompatible color definition on input line 591.
+
+
+Package xcolor Warning: Incompatible color definition on input line 595.
+
+
+Package xcolor Warning: Incompatible color definition on input line 601.
+
+
+Package xcolor Warning: Incompatible color definition on input line 601.
+
+
+Package xcolor Warning: Incompatible color definition on input line 603.
+
+
+Package xcolor Warning: Incompatible color definition on input line 611.
+
+
+Package xcolor Warning: Incompatible color definition on input line 611.
+
+Missing character: There is no 可 (U+53EF) in font [lmmono10-regular]:!
+Missing character: There is no 以 (U+4EE5) in font [lmmono10-regular]:!
+Missing character: There is no 将 (U+5C06) in font [lmmono10-regular]:!
+Missing character: There is no 命 (U+547D) in font [lmmono10-regular]:!
+Missing character: There is no 令 (U+4EE4) in font [lmmono10-regular]:!
+Missing character: There is no 前 (U+524D) in font [lmmono10-regular]:!
+Missing character: There is no 加 (U+52A0) in font [lmmono10-regular]:!
+Missing character: There is no 一 (U+4E00) in font [lmmono10-regular]:!
+Missing character: There is no 个 (U+4E2A) in font [lmmono10-regular]:!
+Missing character: There is no 符 (U+7B26) in font [lmmono10-regular]:!
+Missing character: There is no 号 (U+53F7) in font [lmmono10-regular]:!
+
+Package xcolor Warning: Incompatible color definition on input line 615.
+
+
+Package xcolor Warning: Incompatible color definition on input line 615.
+
+Missing character: There is no 可 (U+53EF) in font [lmmono8-regular]:!
+Missing character: There is no 以 (U+4EE5) in font [lmmono8-regular]:!
+Missing character: There is no 将 (U+5C06) in font [lmmono8-regular]:!
+Missing character: There is no 命 (U+547D) in font [lmmono8-regular]:!
+Missing character: There is no 令 (U+4EE4) in font [lmmono8-regular]:!
+Missing character: There is no 前 (U+524D) in font [lmmono8-regular]:!
+Missing character: There is no 加 (U+52A0) in font [lmmono8-regular]:!
+Missing character: There is no 一 (U+4E00) in font [lmmono8-regular]:!
+Missing character: There is no 个 (U+4E2A) in font [lmmono8-regular]:!
+Missing character: There is no 符 (U+7B26) in font [lmmono8-regular]:!
+Missing character: There is no 号 (U+53F7) in font [lmmono8-regular]:!
+
+Package xcolor Warning: Incompatible color definition on input line 617.
+
+
+Package xcolor Warning: Incompatible color definition on input line 625.
+
+
+Package xcolor Warning: Incompatible color definition on input line 625.
+
+
+Package xcolor Warning: Incompatible color definition on input line 629.
+
+
+
+[36]
+
+Package xcolor Warning: Incompatible color definition on input line 638.
+
+
+Package xcolor Warning: Incompatible color definition on input line 638.
+
+
+Package xcolor Warning: Incompatible color definition on input line 642.
+
+
+Package xcolor Warning: Incompatible color definition on input line 647.
+
+
+Package xcolor Warning: Incompatible color definition on input line 647.
+
+
+Package xcolor Warning: Incompatible color definition on input line 651.
+
+
+Package xcolor Warning: Incompatible color definition on input line 665.
+
+
+Package xcolor Warning: Incompatible color definition on input line 665.
+
+
+
+[37]
+
+Package xcolor Warning: Incompatible color definition on input line 675.
+
+
+Package xcolor Warning: Incompatible color definition on input line 684.
+
+
+Package xcolor Warning: Incompatible color definition on input line 684.
+
+
+
+[38]
+
+Package xcolor Warning: Incompatible color definition on input line 711.
+
+
+Package xcolor Warning: Incompatible color definition on input line 719.
+
+
+Package xcolor Warning: Incompatible color definition on input line 719.
+
+
+Package xcolor Warning: Incompatible color definition on input line 725.
+
+
+Package xcolor Warning: Incompatible color definition on input line 734.
+
+
+Package xcolor Warning: Incompatible color definition on input line 734.
+
+
+Package xcolor Warning: Incompatible color definition on input line 738.
+
+
+Package xcolor Warning: Incompatible color definition on input line 746.
+
+
+Package xcolor Warning: Incompatible color definition on input line 746.
+
+
+
+[39]
+
+Package xcolor Warning: Incompatible color definition on input line 760.
+
+
+Package xcolor Warning: Incompatible color definition on input line 785.
+
+
+Package xcolor Warning: Incompatible color definition on input line 785.
+
+
+Package xcolor Warning: Incompatible color definition on input line 787.
+
+
+
+[40]
+
+Package xcolor Warning: Incompatible color definition on input line 796.
+
+
+Package xcolor Warning: Incompatible color definition on input line 796.
+
+
+Package xcolor Warning: Incompatible color definition on input line 806.
+
+
+Package xcolor Warning: Incompatible color definition on input line 816.
+
+
+Package xcolor Warning: Incompatible color definition on input line 816.
+
+
+Package xcolor Warning: Incompatible color definition on input line 822.
+
+
+
+[41]
+
+Package xcolor Warning: Incompatible color definition on input line 834.
+
+
+Package xcolor Warning: Incompatible color definition on input line 834.
+
+
+Package xcolor Warning: Incompatible color definition on input line 840.
+
+
+Package xcolor Warning: Incompatible color definition on input line 845.
+
+
+Package xcolor Warning: Incompatible color definition on input line 845.
+
+
+Package xcolor Warning: Incompatible color definition on input line 851.
+
+
+Package xcolor Warning: Incompatible color definition on input line 862.
+
+
+Package xcolor Warning: Incompatible color definition on input line 862.
+
+
+
+[42]
+
+Package xcolor Warning: Incompatible color definition on input line 868.
+
+
+Package xcolor Warning: Incompatible color definition on input line 883.
+
+
+Package xcolor Warning: Incompatible color definition on input line 883.
+
+
+Package xcolor Warning: Incompatible color definition on input line 888.
+
+
+Package xcolor Warning: Incompatible color definition on input line 893.
+
+
+Package xcolor Warning: Incompatible color definition on input line 897.
+
+
+Package xcolor Warning: Incompatible color definition on input line 897.
+
+No file Biostar.bbl.
+
+
+[43]
+
+[44
+
 ] (./Biostar.ind) (./Biostar.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
 Package rerunfilecheck Info: File `Biostar.out' has not changed.
-(rerunfilecheck)             Checksum: 7835F5BCE0BADD6DD6704753FF7813F9;1109.
+(rerunfilecheck)             Checksum: AC473D1CA6D61851A7783390B08F7BFC;1719.
  ) 
 Here is how much of TeX's memory you used:
- 25210 strings out of 475848
- 501134 string characters out of 5774274
- 868303 words of memory out of 5000000
- 47703 multiletter control sequences out of 15000+600000
- 589608 words of font info for 120 fonts, out of 8000000 for 9000
+ 25254 strings out of 475848
+ 503137 string characters out of 5774274
+ 876611 words of memory out of 5000000
+ 47745 multiletter control sequences out of 15000+600000
+ 589616 words of font info for 121 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  93i,8n,115p,544b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Biostar.pdf (32 pages).
+Output written on Biostar.pdf (44 pages).

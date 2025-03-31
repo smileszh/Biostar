@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 7 章 makefile | Biostar</title>
+  <meta name="description" content="Scripts" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 7 章 makefile | Biostar" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Scripts" />
+  <meta name="github-repo" content="smileszh/Biostar" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 7 章 makefile | Biostar" />
+  
+  <meta name="twitter:description" content="Scripts" />
+  
+
+<meta name="author" content="小苏" />
+
+
+<meta name="date" content="2025-03-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hisat2.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Biostar</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="part"><span><b>I 数据下载</b></span></li>
+<li class="chapter" data-level="1" data-path="aria2.html"><a href="aria2.html"><i class="fa fa-check"></i><b>1</b> aria2</a></li>
+<li class="chapter" data-level="2" data-path="curl.html"><a href="curl.html"><i class="fa fa-check"></i><b>2</b> curl</a></li>
+<li class="chapter" data-level="3" data-path="sra.html"><a href="sra.html"><i class="fa fa-check"></i><b>3</b> SRA</a></li>
+<li class="part"><span><b>II fastq 质量控制</b></span></li>
+<li class="chapter" data-level="4" data-path="fastp.html"><a href="fastp.html"><i class="fa fa-check"></i><b>4</b> fastp</a></li>
+<li class="part"><span><b>III 比对</b></span></li>
+<li class="chapter" data-level="5" data-path="bwa.html"><a href="bwa.html"><i class="fa fa-check"></i><b>5</b> bwa</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bwa.html"><a href="bwa.html#构建索引"><i class="fa fa-check"></i><b>5.1</b> 构建索引</a></li>
+<li class="chapter" data-level="5.2" data-path="bwa.html"><a href="bwa.html#比对"><i class="fa fa-check"></i><b>5.2</b> 比对</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hisat2.html"><a href="hisat2.html"><i class="fa fa-check"></i><b>6</b> hisat2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hisat2.html"><a href="hisat2.html#构建索引-1"><i class="fa fa-check"></i><b>6.1</b> 构建索引</a></li>
+<li class="chapter" data-level="6.2" data-path="hisat2.html"><a href="hisat2.html#比对-1"><i class="fa fa-check"></i><b>6.2</b> 比对</a></li>
+</ul></li>
+<li class="part"><span><b>IV 模块化脚本</b></span></li>
+<li class="chapter" data-level="7" data-path="makefile.html"><a href="makefile.html"><i class="fa fa-check"></i><b>7</b> makefile</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="makefile.html"><a href="makefile.html#简介"><i class="fa fa-check"></i><b>7.1</b> 简介</a></li>
+<li class="chapter" data-level="7.2" data-path="makefile.html"><a href="makefile.html#makefile-的小技巧"><i class="fa fa-check"></i><b>7.2</b> makefile 的小技巧</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="makefile.html"><a href="makefile.html#默认设置"><i class="fa fa-check"></i><b>7.2.1</b> 默认设置</a></li>
+<li class="chapter" data-level="7.2.2" data-path="makefile.html"><a href="makefile.html#试运行模式"><i class="fa fa-check"></i><b>7.2.2</b> “试运行”模式</a></li>
+<li class="chapter" data-level="7.2.3" data-path="makefile.html"><a href="makefile.html#变量命名"><i class="fa fa-check"></i><b>7.2.3</b> 变量命名</a></li>
+<li class="chapter" data-level="7.2.4" data-path="makefile.html"><a href="makefile.html#文本替换"><i class="fa fa-check"></i><b>7.2.4</b> 文本替换</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="makefile.html"><a href="makefile.html#生信流程模块化"><i class="fa fa-check"></i><b>7.3</b> 生信流程模块化</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="makefile.html"><a href="makefile.html#step1-默认设置"><i class="fa fa-check"></i><b>7.3.1</b> step1: 默认设置</a></li>
+<li class="chapter" data-level="7.3.2" data-path="makefile.html"><a href="makefile.html#step2-打印帮助"><i class="fa fa-check"></i><b>7.3.2</b> step2: 打印帮助</a></li>
+<li class="chapter" data-level="7.3.3" data-path="makefile.html"><a href="makefile.html#step3-定义变量"><i class="fa fa-check"></i><b>7.3.3</b> step3: 定义变量</a></li>
+<li class="chapter" data-level="7.3.4" data-path="makefile.html"><a href="makefile.html#step4-添加代码"><i class="fa fa-check"></i><b>7.3.4</b> step4: 添加代码</a></li>
+<li class="chapter" data-level="7.3.5" data-path="makefile.html"><a href="makefile.html#step5-运行命令"><i class="fa fa-check"></i><b>7.3.5</b> step5: 运行命令</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="makefile.html"><a href="makefile.html#拓展"><i class="fa fa-check"></i><b>7.4</b> 拓展</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://www.biostarhandbook.com/index.html" target="blank">本笔记来自 Biostar Handbook</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Biostar</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="makefile" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">第 7 章</span> makefile<a href="makefile.html#makefile" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="简介" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 简介<a href="makefile.html#简介" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>官方教程：</p>
+<p><a href="https://www.gnu.org/software/make/manual/make.html" class="uri">https://www.gnu.org/software/make/manual/make.html</a></p>
+<p>在生信上游分析中，我们不可能每次都手动输入我们的命令，通常我们会将我们的命令写入到一个脚本文件中，然后通过运行脚本文件来执行我们的命令。但是，当我们工作有些变化时，我们就需要做出一些改变，包括增加或删除，这样就会增加我们的工作量和代码复用性。因此，我们可以使用 makefile 来模块化我们的分析流程。</p>
+<p>Makefile 是一种用于自动化构建过程的文件，通常用于 Unix 和类 Unix 系统上。它由一个名为 <code>make</code> 的工具读取和执行。Makefile 定义了一系列的规则和依赖关系，用于指导如何编译和链接程序。</p>
+<p>在生信分析中使用 makefile 可以帮助我们自动化分析流程，我们不需要特别高级的学习。
+下面是一个简单的 makefile 示例：</p>
+<p>首先我们创建一个文件，命名为<code>Makefile</code>，然后在文件中写入一些内容。</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb21-1"><a href="makefile.html#cb21-1" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb21-2"><a href="makefile.html#cb21-2" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="makefile.html#cb21-3" tabindex="-1"></a><span class="co"># 命令 1 </span></span>
+<span id="cb21-4"><a href="makefile.html#cb21-4" tabindex="-1"></a><span class="dv">foo:</span></span>
+<span id="cb21-5"><a href="makefile.html#cb21-5" tabindex="-1"></a>&gt; echo Hello world!</span>
+<span id="cb21-6"><a href="makefile.html#cb21-6" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="makefile.html#cb21-7" tabindex="-1"></a><span class="co"># 命令 2</span></span>
+<span id="cb21-8"><a href="makefile.html#cb21-8" tabindex="-1"></a><span class="dv">bar:</span></span>
+<span id="cb21-9"><a href="makefile.html#cb21-9" tabindex="-1"></a>&gt; echo Hello world!</span>
+<span id="cb21-10"><a href="makefile.html#cb21-10" tabindex="-1"></a>&gt; echo Hello Everyone!</span></code></pre></div>
+<p>在这个 makefile 中，我们定义了两个目标 <code>foo</code> 和 <code>bar</code>，分别对应两个命令。我们可以通过 <code>make foo</code> 和 <code>make bar</code> 来执行这两个命令。</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="makefile.html#cb22-1" tabindex="-1"></a><span class="ex">$</span> make <span class="at">-f</span> Makefile foo</span>
+<span id="cb22-2"><a href="makefile.html#cb22-2" tabindex="-1"></a><span class="bu">echo</span> Hello world!</span>
+<span id="cb22-3"><a href="makefile.html#cb22-3" tabindex="-1"></a><span class="ex">Hello</span> world!</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="makefile.html#cb23-1" tabindex="-1"></a><span class="ex">$</span> make <span class="at">-f</span> Makefile bar</span>
+<span id="cb23-2"><a href="makefile.html#cb23-2" tabindex="-1"></a><span class="bu">echo</span> Hello world!</span>
+<span id="cb23-3"><a href="makefile.html#cb23-3" tabindex="-1"></a><span class="ex">Hello</span> world!</span>
+<span id="cb23-4"><a href="makefile.html#cb23-4" tabindex="-1"></a><span class="bu">echo</span> Hello Everyone!</span>
+<span id="cb23-5"><a href="makefile.html#cb23-5" tabindex="-1"></a><span class="ex">Hello</span> Everyone!</span></code></pre></div>
+<p>当你的文件名是 <code>Makefile</code> 时，你可以直接使用 <code>make</code> 命令，而不需要 <code>-f</code> 参数。</p>
+<p>通常 makefile 会将命令和结果同时输出到终端，如果我们只想输出结果，<a href="mailto:可以将命令前加一个@符号" class="email">可以将命令前加一个@符号</a>。比如这样：</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb24-1"><a href="makefile.html#cb24-1" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb24-2"><a href="makefile.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="makefile.html#cb24-3" tabindex="-1"></a><span class="co"># 命令 1 </span></span>
+<span id="cb24-4"><a href="makefile.html#cb24-4" tabindex="-1"></a><span class="dv">foo:</span></span>
+<span id="cb24-5"><a href="makefile.html#cb24-5" tabindex="-1"></a>&gt; @echo Hello world!</span></code></pre></div>
+<p>和 bash 脚本一样，makefile 也可以使用变量，比如：</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb25-1"><a href="makefile.html#cb25-1" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb25-2"><a href="makefile.html#cb25-2" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="makefile.html#cb25-3" tabindex="-1"></a><span class="dt">NAME</span> <span class="ch">=</span><span class="st"> xiaoming</span></span>
+<span id="cb25-4"><a href="makefile.html#cb25-4" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="makefile.html#cb25-5" tabindex="-1"></a><span class="dv">hello:</span></span>
+<span id="cb25-6"><a href="makefile.html#cb25-6" tabindex="-1"></a>&gt; @echo Hello <span class="ch">${</span><span class="dt">NAME</span><span class="ch">}</span></span></code></pre></div>
+<p>输出结果为：</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="makefile.html#cb26-1" tabindex="-1"></a><span class="ex">$</span> make <span class="at">-f</span> anyfile hello</span>
+<span id="cb26-2"><a href="makefile.html#cb26-2" tabindex="-1"></a><span class="ex">Hello</span> xiaoming</span></code></pre></div>
+<p><code>make</code> 的开发目的是跟踪目标之间的相互依赖关系，并在任何文件发生更改时，仅执行必要的步骤。例如，如果你已经有一个基因组索引，<code>make</code> 命令将跳过索引步骤。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb27-1"><a href="makefile.html#cb27-1" tabindex="-1"></a><span class="co"># Set the prefix from tabs to &gt;</span></span>
+<span id="cb27-2"><a href="makefile.html#cb27-2" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb27-3"><a href="makefile.html#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="makefile.html#cb27-4" tabindex="-1"></a><span class="dv">counts.txt:</span></span>
+<span id="cb27-5"><a href="makefile.html#cb27-5" tabindex="-1"></a>&gt; echo 100 &gt; counts.txt</span>
+<span id="cb27-6"><a href="makefile.html#cb27-6" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="makefile.html#cb27-7" tabindex="-1"></a><span class="dv">names.txt:</span></span>
+<span id="cb27-8"><a href="makefile.html#cb27-8" tabindex="-1"></a>&gt; echo Joe &gt; names.txt</span>
+<span id="cb27-9"><a href="makefile.html#cb27-9" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="makefile.html#cb27-10" tabindex="-1"></a><span class="dv">results.txt:</span><span class="dt"> counts.txt names.txt</span></span>
+<span id="cb27-11"><a href="makefile.html#cb27-11" tabindex="-1"></a>&gt; cat counts.txt names.txt &gt; results.txt</span></code></pre></div>
+<p>在上面的 Makefile 中，输入 <code>make results.txt</code> 将首先生成 <code>counts.txt</code> 和 <code>names.txt</code>，如果它们不存在的话。然后，它将从这两个文件生成 <code>results.txt</code>。如果你再次运行 <code>make</code>，它将不会执行任何操作，因为所有文件已经存在。</p>
+</div>
+<div id="makefile-的小技巧" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> makefile 的小技巧<a href="makefile.html#makefile-的小技巧" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="默认设置" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> 默认设置<a href="makefile.html#默认设置" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在 Makefile 中添加上这些设置后可以让 makefile 更加强大：</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb28-1"><a href="makefile.html#cb28-1" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb28-2"><a href="makefile.html#cb28-2" tabindex="-1"></a><span class="ot">.DELETE_ON_ERROR:</span></span>
+<span id="cb28-3"><a href="makefile.html#cb28-3" tabindex="-1"></a><span class="dt">SHELL</span> <span class="ch">:=</span><span class="st"> bash</span></span>
+<span id="cb28-4"><a href="makefile.html#cb28-4" tabindex="-1"></a><span class="ot">.ONESHELL:</span></span>
+<span id="cb28-5"><a href="makefile.html#cb28-5" tabindex="-1"></a><span class="dt">.SHELLFLAGS</span> <span class="ch">:=</span><span class="st"> -eu -o pipefail -c</span></span>
+<span id="cb28-6"><a href="makefile.html#cb28-6" tabindex="-1"></a><span class="dt">MAKEFLAGS</span> <span class="ch">+=</span><span class="st"> --warn-undefined-variables --no-print-directory</span></span></code></pre></div>
+<p><code>.DELETE_ON_ERROR:</code></p>
+<p>这个特殊目标告诉 <code>make</code> 在命令执行失败时删除生成的目标文件，以防止生成不完整或损坏的文件。
+<code>SHELL := bash</code></p>
+<p>这行代码指定 <code>make</code> 使用 <code>bash</code> 作为默认的 shell 来执行命令。默认情况下，<code>make</code> 使用 <code>/bin/sh</code>，但可以通过这种方式指定使用其他 shell。
+<code>.ONESHELL:</code></p>
+<p>这个特殊目标指示 <code>make</code> 将单个目标的所有命令在同一个 shell 会话中执行，而不是为每个命令启动一个新的 shell。这对于需要在多个命令之间共享环境或状态的情况很有用。
+<code>.SHELLFLAGS := -eu -o pipefail -c</code></p>
+<p>这些标志用于配置 <code>bash</code> 的行为：
+<code>-e</code>：如果任何命令失败（返回非零状态），则 <code>bash</code> 退出。
+<code>-u</code>：使用未定义的变量时，<code>bash</code> 会报错并退出。
+<code>-o pipefail</code>：如果管道中的任何命令失败，整个管道返回失败状态。
+<code>-c</code>：从字符串中读取命令并执行。
+<code>MAKEFLAGS += --warn-undefined-variables --no-print-directory</code></p>
+<p><code>--warn-undefined-variables</code>：警告使用未定义的变量，以帮助捕获拼写错误或遗漏的变量定义。
+<code>--no-print-directory</code>：禁用 <code>make</code> 在递归调用时打印目录信息，这可以使输出更简洁。</p>
+</div>
+<div id="试运行模式" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> “试运行”模式<a href="makefile.html#试运行模式" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在 bash 命令中，命令对不对，我们可以运行一下看看，如果不对，我们可以再次运行。但是在 makefile 中，我们不希望这样，我们希望一次就对，所以我们可以使用 <code>-n</code> 参数来进行“试运行”模式。这样 makefile 会输出将要执行的命令，但是不会真正执行。这样可以帮助我们检查命令是否正确。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="makefile.html#cb29-1" tabindex="-1"></a><span class="ex">$</span> make hello</span>
+<span id="cb29-2"><a href="makefile.html#cb29-2" tabindex="-1"></a><span class="ex">Hello</span> xiaoming</span>
+<span id="cb29-3"><a href="makefile.html#cb29-3" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="makefile.html#cb29-4" tabindex="-1"></a><span class="ex">$</span> make hello <span class="at">-n</span></span>
+<span id="cb29-5"><a href="makefile.html#cb29-5" tabindex="-1"></a><span class="bu">echo</span> Hello xiaoming</span></code></pre></div>
+</div>
+<div id="变量命名" class="section level3 hasAnchor" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> 变量命名<a href="makefile.html#变量命名" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在 Makefile 中可以通过 <code>?=</code> 这样的方式预设变量：</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb30-1"><a href="makefile.html#cb30-1" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb30-2"><a href="makefile.html#cb30-2" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="makefile.html#cb30-3" tabindex="-1"></a><span class="dt">NAME</span> <span class="ch">?=</span><span class="st"> xiaoming</span></span>
+<span id="cb30-4"><a href="makefile.html#cb30-4" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="makefile.html#cb30-5" tabindex="-1"></a><span class="dv">hello:</span></span>
+<span id="cb30-6"><a href="makefile.html#cb30-6" tabindex="-1"></a>&gt; @echo Hello <span class="ch">${</span><span class="dt">NAME</span><span class="ch">}</span></span></code></pre></div>
+<p>这样，如果我们在命令行中没有定义 <code>NAME</code> 变量，那么 <code>NAME</code> 就会被设置为 <code>xiaoming</code>。</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="makefile.html#cb31-1" tabindex="-1"></a><span class="ex">$</span> make hello</span>
+<span id="cb31-2"><a href="makefile.html#cb31-2" tabindex="-1"></a><span class="ex">Hello</span> xiaoming</span>
+<span id="cb31-3"><a href="makefile.html#cb31-3" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="makefile.html#cb31-4" tabindex="-1"></a><span class="ex">$</span> make hello NAME=lihua</span>
+<span id="cb31-5"><a href="makefile.html#cb31-5" tabindex="-1"></a><span class="ex">Hello</span> lihua</span></code></pre></div>
+</div>
+<div id="文本替换" class="section level3 hasAnchor" number="7.2.4">
+<h3><span class="header-section-number">7.2.4</span> 文本替换<a href="makefile.html#文本替换" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在某些情况下，您想从现有字符串创建一个新字符串。</p>
+<p>例如，你想从路径中提取目录名或文件名，如</p>
+<p>PATH = data/reads/abc.txt
+make 语法提供了函数来执行此操作，例如：</p>
+<p>DIR = $(dir ${PATH}) 将包含 data/reads/
+FNAME = $(notdir ${PATH}) 将包含 abc.txt</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb32-1"><a href="makefile.html#cb32-1" tabindex="-1"></a><span class="co"># Sets the prefix for commands.</span></span>
+<span id="cb32-2"><a href="makefile.html#cb32-2" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb32-3"><a href="makefile.html#cb32-3" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="makefile.html#cb32-4" tabindex="-1"></a><span class="co"># Set a filename</span></span>
+<span id="cb32-5"><a href="makefile.html#cb32-5" tabindex="-1"></a><span class="dt">FILE</span> <span class="ch">=</span><span class="st"> data/refs/ebola.fa.gz</span></span>
+<span id="cb32-6"><a href="makefile.html#cb32-6" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="makefile.html#cb32-7" tabindex="-1"></a><span class="dv">demo:</span></span>
+<span id="cb32-8"><a href="makefile.html#cb32-8" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="makefile.html#cb32-9" tabindex="-1"></a><span class="co"># Prints: data/refs/ebola.fa.gz</span></span>
+<span id="cb32-10"><a href="makefile.html#cb32-10" tabindex="-1"></a>&gt; @echo <span class="ch">${</span><span class="dt">FILE</span><span class="ch">}</span></span>
+<span id="cb32-11"><a href="makefile.html#cb32-11" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="makefile.html#cb32-12" tabindex="-1"></a><span class="co"># Prints: data/refs</span></span>
+<span id="cb32-13"><a href="makefile.html#cb32-13" tabindex="-1"></a>&gt; @ echo <span class="ch">$(</span><span class="kw">dir</span><span class="st"> </span><span class="ch">${</span><span class="dt">FILE</span><span class="ch">})</span></span>
+<span id="cb32-14"><a href="makefile.html#cb32-14" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="makefile.html#cb32-15" tabindex="-1"></a><span class="co"># Prints: ebola.fa.gz</span></span>
+<span id="cb32-16"><a href="makefile.html#cb32-16" tabindex="-1"></a>&gt; @ echo <span class="ch">$(</span><span class="kw">notdir</span><span class="st"> </span><span class="ch">${</span><span class="dt">FILE</span><span class="ch">})</span></span>
+<span id="cb32-17"><a href="makefile.html#cb32-17" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="makefile.html#cb32-18" tabindex="-1"></a><span class="co"># Prints: data/refs/human.fa.gz</span></span>
+<span id="cb32-19"><a href="makefile.html#cb32-19" tabindex="-1"></a>&gt; @ echo <span class="ch">$(</span><span class="kw">subst</span><span class="st"> ebola</span><span class="kw">,</span><span class="st">human</span><span class="kw">,</span><span class="ch">${</span><span class="dt">FILE</span><span class="ch">})</span></span>
+<span id="cb32-20"><a href="makefile.html#cb32-20" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="makefile.html#cb32-21" tabindex="-1"></a><span class="co"># Prints: data/refs/ebola.fa</span></span>
+<span id="cb32-22"><a href="makefile.html#cb32-22" tabindex="-1"></a>&gt; @echo <span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> %.gz</span><span class="kw">,</span><span class="st">%</span><span class="kw">,</span><span class="ch">${</span><span class="dt">FILE</span><span class="ch">})</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="makefile.html#cb33-1" tabindex="-1"></a><span class="ex">$</span> make demo</span>
+<span id="cb33-2"><a href="makefile.html#cb33-2" tabindex="-1"></a><span class="ex">data/refs/ebola.fa.gz</span></span>
+<span id="cb33-3"><a href="makefile.html#cb33-3" tabindex="-1"></a><span class="ex">data/refs/</span></span>
+<span id="cb33-4"><a href="makefile.html#cb33-4" tabindex="-1"></a><span class="ex">ebola.fa.gz</span></span>
+<span id="cb33-5"><a href="makefile.html#cb33-5" tabindex="-1"></a><span class="ex">data/refs/human.fa.gz</span></span>
+<span id="cb33-6"><a href="makefile.html#cb33-6" tabindex="-1"></a><span class="ex">data/refs/ebola.fa</span></span></code></pre></div>
+</div>
+</div>
+<div id="生信流程模块化" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> 生信流程模块化<a href="makefile.html#生信流程模块化" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>虽然我们都希望一个脚本能够完成所有的工作，这样是可实现的，但可能会遇到各种各样的问题，比如脚本过长，不易维护，不易复用等。因此，我们可以将脚本分解为多个模块，每个模块负责一个特定的任务。这样可以提高代码的可读性，可维护性和可复用性。</p>
+<p>明白了需求后，按照一个良好的编写习惯，可以很好的将脚本模块化。这样可以提高代码的可读性，可维护性和可复用性。我们接下来编写一个从 SRA 数据库下载 metadata 数据的 make 脚本吧。</p>
+<div id="step1-默认设置" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> step1: 默认设置<a href="makefile.html#step1-默认设置" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb34-1"><a href="makefile.html#cb34-1" tabindex="-1"></a><span class="co"># Makefile customizations.</span></span>
+<span id="cb34-2"><a href="makefile.html#cb34-2" tabindex="-1"></a><span class="dt">.RECIPEPREFIX</span> <span class="ch">=</span><span class="st"> &gt;</span></span>
+<span id="cb34-3"><a href="makefile.html#cb34-3" tabindex="-1"></a><span class="ot">.DELETE_ON_ERROR:</span></span>
+<span id="cb34-4"><a href="makefile.html#cb34-4" tabindex="-1"></a><span class="dt">SHELL</span> <span class="ch">:=</span><span class="st"> bash</span></span>
+<span id="cb34-5"><a href="makefile.html#cb34-5" tabindex="-1"></a><span class="ot">.ONESHELL:</span></span>
+<span id="cb34-6"><a href="makefile.html#cb34-6" tabindex="-1"></a><span class="dt">.SHELLFLAGS</span> <span class="ch">:=</span><span class="st"> -eu -o pipefail -c</span></span>
+<span id="cb34-7"><a href="makefile.html#cb34-7" tabindex="-1"></a><span class="dt">MAKEFLAGS</span> <span class="ch">+=</span><span class="st"> --warn-undefined-variables --no-print-directory</span></span></code></pre></div>
+</div>
+<div id="step2-打印帮助" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> step2: 打印帮助<a href="makefile.html#step2-打印帮助" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>我们总是会忘记自己的脚本是干什么的。因此，最好第一个命令是打印帮助。</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb35-1"><a href="makefile.html#cb35-1" tabindex="-1"></a><span class="co"># Print usage information.</span></span>
+<span id="cb35-2"><a href="makefile.html#cb35-2" tabindex="-1"></a><span class="dv">usage:</span></span>
+<span id="cb35-3"><a href="makefile.html#cb35-3" tabindex="-1"></a>&gt; @echo <span class="st">&quot;#&quot;</span></span>
+<span id="cb35-4"><a href="makefile.html#cb35-4" tabindex="-1"></a><span class="dv">&gt; @echo &quot;# metadata.mk:</span><span class="dt"> downloads metadata from SRA&quot;</span></span>
+<span id="cb35-5"><a href="makefile.html#cb35-5" tabindex="-1"></a>&gt; @echo <span class="st">&quot;#&quot;</span></span>
+<span id="cb35-6"><a href="makefile.html#cb35-6" tabindex="-1"></a>&gt; @echo <span class="st">&quot;# SRA=</span><span class="ch">${</span><span class="dt">SRA</span><span class="ch">}</span><span class="st">&quot;</span></span>
+<span id="cb35-7"><a href="makefile.html#cb35-7" tabindex="-1"></a>&gt; @echo <span class="st">&quot;#&quot;</span></span>
+<span id="cb35-8"><a href="makefile.html#cb35-8" tabindex="-1"></a>&gt; @echo <span class="st">&quot;# make run|keys|clean&quot;</span></span>
+<span id="cb35-9"><a href="makefile.html#cb35-9" tabindex="-1"></a>&gt; @echo <span class="st">&quot;#&quot;</span></span></code></pre></div>
+</div>
+<div id="step3-定义变量" class="section level3 hasAnchor" number="7.3.3">
+<h3><span class="header-section-number">7.3.3</span> step3: 定义变量<a href="makefile.html#step3-定义变量" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>刚开始可以不需要这一步，等到足够熟练使用后，可以将一些常用的变量定义在这里。</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb36-1"><a href="makefile.html#cb36-1" tabindex="-1"></a><span class="co"># Sets the default target.</span></span>
+<span id="cb36-2"><a href="makefile.html#cb36-2" tabindex="-1"></a><span class="dt">SRA</span> <span class="ch">?=</span><span class="st"> PRJEB31790</span></span></code></pre></div>
+</div>
+<div id="step4-添加代码" class="section level3 hasAnchor" number="7.3.4">
+<h3><span class="header-section-number">7.3.4</span> step4: 添加代码<a href="makefile.html#step4-添加代码" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>这里添加一下下载，提取信息，清理的代码。</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb37-1"><a href="makefile.html#cb37-1" tabindex="-1"></a><span class="dv">run:</span></span>
+<span id="cb37-2"><a href="makefile.html#cb37-2" tabindex="-1"></a>&gt; @bio search <span class="ch">${</span><span class="dt">SRA</span><span class="ch">}</span> -H --csv --all &gt; <span class="ch">${</span><span class="dt">SRA</span><span class="ch">}</span>.csv</span>
+<span id="cb37-3"><a href="makefile.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="makefile.html#cb37-4" tabindex="-1"></a><span class="dv">keys:</span><span class="dt"> </span><span class="ch">${</span><span class="dt">SRA</span><span class="ch">}</span><span class="dt">.csv</span></span>
+<span id="cb37-5"><a href="makefile.html#cb37-5" tabindex="-1"></a>&gt; @cat <span class="ch">${</span><span class="dt">SRA</span><span class="ch">}</span>.csv | csvcut -c run_accession,sample_title</span>
+<span id="cb37-6"><a href="makefile.html#cb37-6" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="makefile.html#cb37-7" tabindex="-1"></a><span class="dv">clean:</span></span>
+<span id="cb37-8"><a href="makefile.html#cb37-8" tabindex="-1"></a>&gt; @rm -f <span class="ch">${</span><span class="dt">SRA</span><span class="ch">}</span>.csv</span></code></pre></div>
+</div>
+<div id="step5-运行命令" class="section level3 hasAnchor" number="7.3.5">
+<h3><span class="header-section-number">7.3.5</span> step5: 运行命令<a href="makefile.html#step5-运行命令" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>把上述所有代码放到一个文件中，然后运行 make 命令。</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="makefile.html#cb38-1" tabindex="-1"></a><span class="co"># 使用默认变量</span></span>
+<span id="cb38-2"><a href="makefile.html#cb38-2" tabindex="-1"></a><span class="fu">make</span> <span class="at">-f</span> metadata.mk run</span>
+<span id="cb38-3"><a href="makefile.html#cb38-3" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="makefile.html#cb38-4" tabindex="-1"></a><span class="co"># 使用自定义变量</span></span>
+<span id="cb38-5"><a href="makefile.html#cb38-5" tabindex="-1"></a><span class="fu">make</span> <span class="at">-f</span> metadata.mk run SRA=PRJNA932187</span>
+<span id="cb38-6"><a href="makefile.html#cb38-6" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="makefile.html#cb38-7" tabindex="-1"></a><span class="co"># 提取关键信息</span></span>
+<span id="cb38-8"><a href="makefile.html#cb38-8" tabindex="-1"></a><span class="fu">make</span> <span class="at">-f</span> metadata.mk keys</span>
+<span id="cb38-9"><a href="makefile.html#cb38-9" tabindex="-1"></a><span class="co"># 也可以直接运行，因为定义了依赖，会默认先运行 run，然后运行 keys</span></span>
+<span id="cb38-10"><a href="makefile.html#cb38-10" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="makefile.html#cb38-11" tabindex="-1"></a><span class="co"># 清理</span></span>
+<span id="cb38-12"><a href="makefile.html#cb38-12" tabindex="-1"></a><span class="fu">make</span> <span class="at">-f</span> metadata.mk clean</span></code></pre></div>
+</div>
+</div>
+<div id="拓展" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> 拓展<a href="makefile.html#拓展" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>我经常使用的软件 <code>bio</code> :
+<a href="https://www.bioinfo.help/index.html" class="uri">https://www.bioinfo.help/index.html</a>
+这个软件有很多我们常用的生信工具。我建议你使用它！</p>
+<p>下载软件后，运行下面这个代码会下载很多的 makefile 脚本，熟悉使用它们，你会发现生信分析变得更加简单。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="makefile.html#cb39-1" tabindex="-1"></a><span class="ex">bio</span> code</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hisat2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/smileszh/Biostar/edit/master/05-1-makefile.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Biostar.pdf", "Biostar.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
